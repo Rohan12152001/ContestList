@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<!--    <script type="text/javascript" src="main.js"></script>-->
+<!--    <link rel= "stylesheet" type= "text/css" href= "static/styles/home.css">-->
+    <title>Home page</title>
+    <style>
+        h2{
+            color: crimson;
+        }
+        th{
+            background-color: aqua;
+        }
+    </style>
+</head>
+<body>
+    <h2> All contests are displayed here </h2>
+
+    <table id="contest_table" style="border:1px solid black;padding: 1px;width: 75%;border-collapse: collapse;table-layout: auto">
+        <!--    table to display contests-->
+    </table>
+
+    <script>
+        // get the table object
+        var contest_table = document.getElementById("contest_table");
+
+        // function to fetch DB & display using DOM
+        function display_table() {
+            contest_table.innerHTML=" "     // Emptying the html before inserting
+
+            fetch("http://127.0.0.1:5000/contests").then(response => response.json()).then(data => {
+                console.log(data);       // intial checks
+                contest_table.setAttribute('border','2');
+                // Modyfying the table using DOM
+                contest_table.innerHTML="<tr>" +
+                                        "<th>No.</th>" +
+                                        "<th>Contest Name</th>" +
+                                        "<th>Duration </th>" +
+                                        "<th>Start Time</th>" +
+                                        "<th>End Time</th>" +
+                                        "<th>Phase</th>" +
+                                        "<th>Email Me</th>" +
+                                        "</tr>"
+
+                // display records where contest is running/upcoming
+                for(let record=0;record<data.records.length;record++){
+                    if(data.records[record]['phase'] !== "Ended"){
+                        if(data.records[record]['phase'] !== "Coding"){
+                            contest_table.innerHTML+="<tr>" +
+                                              "<td>"+ data.records[record]['id'] +"</td>" +
+                                              "<td>"+ data.records[record]['contest_name'] +"</td>" +
+                                              "<td>"+ data.records[record]['duration_seconds'] +"</td>" +
+                                              "<td>"+ data.records[record]['startTime'] +"</td>" +
+                                              "<td>"+ data.records[record]['endTime'] +"</td>" +
+                                              "<td>"+ data.records[record]['phase'] +"</td>" +
+                                              "<td><form action=\"/emailPage\" style='padding: 4px'>" +
+                                                "<input type=\"submit\" value=\"Subscribe\">" +
+                                              "</form></td>" +
+                                              "</tr>"
+                        }
+
+                        else{
+                            contest_table.innerHTML+="<tr>" +
+                                              "<td>"+ data.records[record]['id'] +"</td>" +
+                                              "<td>"+ data.records[record]['contest_name'] +"</td>" +
+                                              "<td>"+ data.records[record]['duration_seconds'] +"</td>" +
+                                              "<td>"+ data.records[record]['startTime'] +"</td>" +
+                                              "<td>"+ data.records[record]['endTime'] +"</td>" +
+                                              "<td>"+ data.records[record]['phase'] +"</td>" +
+                                              "<td>NULL</td>" +
+                                              "</tr>"
+                        }
+                    }
+                }
+            })
+        }
+
+        display_table();
+    </script>
+
+</body>
+</html>

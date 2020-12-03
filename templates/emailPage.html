@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EmailPage</title>
+</head>
+<body>
+    <h2> Enter Email,Time & contestID here !</h2>
+    <div id="email-form">
+        <form action="/postEmail" method="post">
+            <input type="email" name="emailId" placeholder="Email Id"> <br> <br>
+            <input type="number" name="contestId" placeholder="Contest Id"> <br> <br>
+            Before:
+            <select name="emailTime" id="emailTime">
+                <option value="1hr">1 Hr</option>
+                <option value="12hr">12 Hr</option>
+                <option value="24hr">24 Hr</option>
+            </select> <br> <br>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+</body>
+</html>
