@@ -30,9 +30,9 @@
             contest_table.innerHTML=" "     // Emptying the html before inserting
 
             fetch("http://127.0.0.1:5000/contests").then(response => response.json()).then(data => {
-                console.log(data);       // intial checks
                 contest_table.setAttribute('border','2');
-                // Modyfying the table using DOM
+
+                // Modifying the table using DOM
                 contest_table.innerHTML="<tr>" +
                                         "<th>No.</th>" +
                                         "<th>Contest Name</th>" +
@@ -45,9 +45,13 @@
 
                 // display records where contest is running/upcoming
                 for(let record=0;record<data.records.length;record++){
+                    var conID=data.records[record]['id'];
+                    // Disable subscribe button if currTime() exceeds the cutOff time (i.e contestTime - 3600) UNIX
+                    let currentTime=Math.floor(Date.now() /1000);
+                    let cutOffTime=data.records[record]['startTime'] - 3600;
+
                     if(data.records[record]['phase'] !== "Ended"){
-                        var conID=data.records[record]['id'];
-                        if(data.records[record]['phase'] !== "Coding"){
+                        if(data.records[record]['phase'] !== "Coding" && currentTime < cutOffTime){
                             contest_table.innerHTML+="<tr>" +
                                               "<td>"+ data.records[record]['id'] +"</td>" +
                                               "<td>"+ data.records[record]['contest_name'] +"</td>" +
@@ -69,7 +73,7 @@
                                               "<td>"+ data.records[record]['startTime'] +"</td>" +
                                               "<td>"+ data.records[record]['endTime'] +"</td>" +
                                               "<td>"+ data.records[record]['phase'] +"</td>" +
-                                              "<td>NULL</td>" +
+                                              "<td> NULL </td>" +
                                               "</tr>"
                         }
                     }

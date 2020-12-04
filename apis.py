@@ -15,11 +15,6 @@ app = Flask(__name__)
 # )
 '''Unix time end'''
 
-'''Use query params to get the contest ID'''
-# const urlParams = new URLSearchParams(window.location.search);
-# const myParam = urlParams.get('myParam');
-'''END'''
-
 ''' Fetch data from DB'''
 def fetch_from_DB():
     try:
@@ -45,7 +40,6 @@ def fetch_from_DB():
     return records
     # pass
 
-
 '''Fetch End !'''
 
 ''' Get details about a specific contest '''
@@ -59,8 +53,6 @@ def get_contest_details(contestId):
         sql_fetch_query = """select * from temp_table where id=%s"""
         cursor.execute(sql_fetch_query,(contestId,))
         records = cursor.fetchone()
-        # print(records)
-        # print(len(records))
     except Error as e:
         print("Error reading data from MySQL table", e)
 
@@ -76,7 +68,7 @@ def get_contest_details(contestId):
 
 '''Post email and timing details '''
 def insert_email(details):
-    # details tuple is what we want insert
+    # "details" tuple is what we want insert
     try:
         connection = mysql.connector.connect(host='localhost',
                                              database='proj_contestlist',
