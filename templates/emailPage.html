@@ -9,7 +9,7 @@
     <div>
         <form id="email-form">
             <input type="email" id="emailId" name="emailId" placeholder="Email Id" required> <br> <br>
-            <input type="number" id="contestId" name="contestId" placeholder="Contest Id" required> <br> <br>
+<!--            <input type="number" id="contestId" name="contestId" placeholder="Contest Id" required> <br> <br>-->
             Before:
             <select name="emailTime" id="emailTime" required>
                 <option value="1hr">1 Hr</option>
@@ -22,15 +22,19 @@
 
 
     <script>
+        // get the contestID from the URL param's
+        const urlParams = new URLSearchParams(window.location.search);
+        const conID = urlParams.get('contestId');
+
         // Doing this to pass a json response to the POST api
         const emailId=document.getElementById("emailId");
-        const contestId=document.getElementById("contestId");
+        const contestId=document.getElementById("contestId");       // currently no USE
         const emailTime=document.getElementById("emailTime");
         var submit_button=document.getElementById("Submit-form");
 
         submit_button.addEventListener("click",function () {
             var temp_emailId=emailId.value;
-            var temp_contestId=contestId.value;
+            var temp_contestId=conID;
             var temp_emailTime=emailTime.value;
 
             // structure the request

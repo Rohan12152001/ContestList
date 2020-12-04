@@ -15,6 +15,11 @@ app = Flask(__name__)
 # )
 '''Unix time end'''
 
+'''Use query params to get the contest ID'''
+# const urlParams = new URLSearchParams(window.location.search);
+# const myParam = urlParams.get('myParam');
+'''END'''
+
 ''' Fetch data from DB'''
 def fetch_from_DB():
     try:
@@ -113,6 +118,8 @@ def home_page():
 # returns emailPage
 @app.route('/emailPage')
 def ask_email_page():
+    # conID=request.args.get('contestId')
+    # print("conetestID is:", conID) #  comment hai
     return render_template('emailPage.html')
 
 # Insert data into emailTable as per users choice

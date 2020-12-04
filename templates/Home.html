@@ -46,6 +46,7 @@
                 // display records where contest is running/upcoming
                 for(let record=0;record<data.records.length;record++){
                     if(data.records[record]['phase'] !== "Ended"){
+                        var conID=data.records[record]['id'];
                         if(data.records[record]['phase'] !== "Coding"){
                             contest_table.innerHTML+="<tr>" +
                                               "<td>"+ data.records[record]['id'] +"</td>" +
@@ -55,11 +56,11 @@
                                               "<td>"+ data.records[record]['endTime'] +"</td>" +
                                               "<td>"+ data.records[record]['phase'] +"</td>" +
                                               "<td><form action=\"/emailPage\" style='padding: 4px'>" +
+                                                "<input type='hidden' name='contestId' value=\'"+ conID +"\'>" +
                                                 "<input type=\"submit\" value=\"Subscribe\">" +
                                               "</form></td>" +
                                               "</tr>"
                         }
-
                         else{
                             contest_table.innerHTML+="<tr>" +
                                               "<td>"+ data.records[record]['id'] +"</td>" +
