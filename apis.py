@@ -66,7 +66,7 @@ def get_contest_details(contestId):
 
 '''Get details end'''
 
-'''Post email and timing details '''
+'''Insert email and timing details '''
 def insert_email(details):
     # "details" tuple is what we want insert
     try:
@@ -79,10 +79,8 @@ def insert_email(details):
         cursor.execute(sql_insert_query, details)
         connection.commit()
         print("Success")
-        # print(records)
-        # print(len(records))
     except Error as e:
-        print("Error inserting data from MySQL table", e)
+        print("Error inserting data in MySQL table", e)
 
     finally:
         if (connection.is_connected()):

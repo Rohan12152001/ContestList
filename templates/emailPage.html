@@ -5,31 +5,56 @@
     <title>EmailPage</title>
 </head>
 <body>
-    <h2> Enter Email,Time & contestID here !</h2>
+    <h2> Enter EmailId & select Reminder Time here !</h2>
     <div>
         <form id="email-form">
             <input type="email" id="emailId" name="emailId" placeholder="Email Id" required> <br> <br>
 <!--            <input type="number" id="contestId" name="contestId" placeholder="Contest Id" required> <br> <br>-->
             Before:
             <select name="emailTime" id="emailTime" required>
-                <option value="1hr">1 Hr</option>
-                <option value="12hr">12 Hr</option>
-                <option value="24hr">24 Hr</option>
-            </select> <br> <br>
+                <!-- The innerHtml is entered by using JS -->
+            </select> of the Contest  <br> <br>
             <input type="submit" id="Submit-form" value="Submit">
         </form>
     </div>
 
-
     <script>
-        // get the contestID from the URL param's
+
+        // fetch  urlParam's useful at many places
         const urlParams = new URLSearchParams(window.location.search);
+
+        //get contestStartTime from URL param's
+        const contestStartTime= urlParams.get('contestTime');
+        var emailTime=document.getElementById("emailTime");
+
+        // Judgement function
+        function JudgeEmailTime(){
+            const cutOff_24hr = contestStartTime - (3600*24);   // All are UNIX time
+            const cutOff_12hr = contestStartTime - (3600*12);   // All are UNIX time
+            const currentTime=Math.floor(Date.now() /1000);     // All are UNIX time
+            emailTime.innerHTML=" ";
+
+            if(currentTime < cutOff_24hr){
+                emailTime.innerHTML+="<option value=\"1hr\">1 Hr</option>" +
+                                     "<option value=\"12hr\">12 Hr</option>" +
+                                     "<option value=\"24hr\">24 Hr</option>";
+            }else if(currentTime < cutOff_12hr){
+                emailTime.innerHTML+="<option value=\"1hr\">1 Hr</option>" +
+                                     "<option value=\"12hr\">12 Hr</option>";
+            }else{
+                emailTime.innerHTML+="<option value=\"1hr\">1 Hr</option>";
+            }
+        }
+        // Judge which emailTimes should be shown
+        JudgeEmailTime();
+
+        // get the contestID from the URL param's
         const conID = urlParams.get('contestId');
 
         // Doing this to pass a json response to the POST api
+
         const emailId=document.getElementById("emailId");
-        // const contestId=document.getElementById("contestId");
-        const emailTime=document.getElementById("emailTime");
+        // const emailTime=document.getElementById("emailTime");
         var submit_button=document.getElementById("Submit-form");
 
         submit_button.addEventListener("click",function () {
@@ -60,7 +85,6 @@
 
 
         })
-
 
     </script>
 

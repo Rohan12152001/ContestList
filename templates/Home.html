@@ -12,6 +12,9 @@
         th{
             background-color: aqua;
         }
+        td{
+            background-color: white;
+        }
     </style>
 </head>
 <body>
@@ -46,6 +49,8 @@
                 // display records where contest is running/upcoming
                 for(let record=0;record<data.records.length;record++){
                     var conID=data.records[record]['id'];
+                    var conStartTime=data.records[record]['startTime'];
+
                     // Disable subscribe button if currTime() exceeds the cutOff time (i.e contestTime - 3600) UNIX
                     let currentTime=Math.floor(Date.now() /1000);
                     let cutOffTime=data.records[record]['startTime'] - 3600;
@@ -61,6 +66,7 @@
                                               "<td>"+ data.records[record]['phase'] +"</td>" +
                                               "<td><form action=\"/emailPage\" style='padding: 4px'>" +
                                                 "<input type='hidden' name='contestId' value=\'"+ conID +"\'>" +
+                                                "<input type='hidden' name='contestTime' value=\'"+ conStartTime +"\'>" +
                                                 "<input type=\"submit\" value=\"Subscribe\">" +
                                               "</form></td>" +
                                               "</tr>"
