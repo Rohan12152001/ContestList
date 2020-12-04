@@ -16,8 +16,6 @@ app = Flask(__name__)
 '''Unix time end'''
 
 ''' Fetch data from DB'''
-
-
 def fetch_from_DB():
     try:
         connection = mysql.connector.connect(host='localhost',
@@ -45,6 +43,67 @@ def fetch_from_DB():
 
 '''Fetch End !'''
 
+''' Get details about a specific contest '''
+def get_contest_details(contestId):
+    try:
+        connection = mysql.connector.connect(host='localhost',
+                                             database='proj_contestlist',
+                                             user='root',
+                                             password='Rohan@1215')
+        cursor = connection.cursor(dictionary=True)
+        sql_fetch_query = """select * from temp_table where id=%s"""
+        cursor.execute(sql_fetch_query,(contestId,))
+        records = cursor.fetchone()
+        # print(records)
+        # print(len(records))
+    except Error as e:
+        print("Error reading data from MySQL table", e)
+
+    finally:
+        if (connection.is_connected()):
+            cursor.close()
+            connection.close()
+            print("MySQL connection is closed")
+
+    return records
+
+'''Get details end'''
+
+'''Post email and timing details '''
+def insert_email(details):
+    # details tuple is what we want insert
+    try:
+        connection = mysql.connector.connect(host='localhost',
+                                             database='proj_contestlist',
+                                             user='root',
+                                             password='Rohan@1215')
+        cursor = connection.cursor()
+        sql_insert_query = """INSERT INTO email_table (contestId,contestName,emailAddress,sendTime) values (%s,%s,%s,%s)"""
+        cursor.execute(sql_insert_query, details)
+        connection.commit()
+        print("Success")
+        # print(records)
+        # print(len(records))
+    except Error as e:
+        print("Error inserting data from MySQL table", e)
+
+    finally:
+        if (connection.is_connected()):
+            cursor.close()
+            connection.close()
+            print("MySQL connection is closed")
+
+
+'''POST END'''
+def Hrs_to_seconds(Hrs):
+    if Hrs == "1hr":
+        return 3600
+    elif Hrs == "12hr":
+        return 12*3600
+    elif Hrs == "24hr":
+        return 24*3600
+    else:
+        return 0
 
 # Home page that returns an html page !!
 @app.route('/')
@@ -57,9 +116,28 @@ def ask_email_page():
     return render_template('emailPage.html')
 
 # Insert data into emailTable as per users choice
-@app.route('/postEmail',methods=["POST"])
+@app.route('/postEmail', methods=['POST'])
 def postEmail():
-    pass
+    # The response format is
+    # request={
+    #                 "emailId":temp_emailId,
+    #                 "contestId":temp_contestId,
+    #                 "emailTimeBefore":temp_emailTime
+    #          }
+    response = request.get_json()
+
+    # get details about the contest using contestID
+    contest_details = get_contest_details(response['contestId'])   # this is a dictionary
+
+    # Calculate time of send in UNIX
+    CutTime = Hrs_to_seconds(response['emailTimeBefore'])
+    sendTime = contest_details['startTime'] - CutTime
+
+    # Now insert the data required for email table !
+    insert_tuple = (int(response['contestId']), contest_details['contest_name'], response['emailId'], sendTime)
+    insert_email(insert_tuple)
+
+    return jsonify(response)
 
 # api to fetch data from our DB
 @app.route('/contests')

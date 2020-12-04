@@ -6,19 +6,59 @@
 </head>
 <body>
     <h2> Enter Email,Time & contestID here !</h2>
-    <div id="email-form">
-        <form action="/postEmail" method="post">
-            <input type="email" name="emailId" placeholder="Email Id"> <br> <br>
-            <input type="number" name="contestId" placeholder="Contest Id"> <br> <br>
+    <div>
+        <form id="email-form">
+            <input type="email" id="emailId" name="emailId" placeholder="Email Id" required> <br> <br>
+            <input type="number" id="contestId" name="contestId" placeholder="Contest Id" required> <br> <br>
             Before:
-            <select name="emailTime" id="emailTime">
+            <select name="emailTime" id="emailTime" required>
                 <option value="1hr">1 Hr</option>
                 <option value="12hr">12 Hr</option>
                 <option value="24hr">24 Hr</option>
             </select> <br> <br>
-            <input type="submit" value="Submit">
+            <input type="submit" id="Submit-form" value="Submit">
         </form>
     </div>
+
+
+    <script>
+        // Doing this to pass a json response to the POST api
+        const emailId=document.getElementById("emailId");
+        const contestId=document.getElementById("contestId");
+        const emailTime=document.getElementById("emailTime");
+        var submit_button=document.getElementById("Submit-form");
+
+        submit_button.addEventListener("click",function () {
+            var temp_emailId=emailId.value;
+            var temp_contestId=contestId.value;
+            var temp_emailTime=emailTime.value;
+
+            // structure the request
+            var request={
+                "emailId":temp_emailId,
+                "contestId":temp_contestId,
+                "emailTimeBefore":temp_emailTime
+            };
+
+            // Just like we do it in postman !
+            // the fetch() function returns a promise
+
+            fetch('http://127.0.0.1:5000/postEmail',
+                {method:"POST",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body:JSON.stringify(request)
+                }
+            ).then(response => response.json());
+
+            // maybe here we should do a get request for displaying Success or Fail ??
+
+
+        })
+
+
+    </script>
 
 </body>
 </html>
