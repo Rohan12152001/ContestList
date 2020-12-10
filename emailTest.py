@@ -81,15 +81,15 @@ def send_Email(receiver_email, contestTime, duration, contestName):
 
 
 # This query returns all the email_Info that has to be sent at that moment
-def query_for_emailJob(givenTime):
+def query_for_emailJob(lowTime, highTime):
     try:
         connection = mysql.connector.connect(host='localhost',
                                              database='proj_contestlist',
                                              user='root',
                                              password='Rohan@1215')
         cursor = connection.cursor(dictionary=True)
-        sql_fetch_query = "select contestId,contestName,emailAddress from email_table where sendTime=%s"
-        cursor.execute(sql_fetch_query, (givenTime,))
+        sql_fetch_query = "select contestId,contestName,emailAddress from email_table where sendTime between %s and %s"
+        cursor.execute(sql_fetch_query, (lowTime, highTime))
         records = cursor.fetchall()
         # print(records)
         # print(len(records))
@@ -107,10 +107,12 @@ def query_for_emailJob(givenTime):
 
 # This job is expected to run in the background
 def email_job():
-    # call this job after every 5sec
+    # call this job after every 10 minutes so that email waiting is less
     while True:
         time_now = (int(time.time()))
-        email_to_these_records = query_for_emailJob(1607542500)     # This is a dictionary
+        # time_now = 1607625950
+        email_to_these_records = query_for_emailJob(time_now - 3600*10, time_now + 3600*10)     # This is a dictionary
+        # print(email_to_these_records)
         # The records format is:
         # [{'contestId': 1501, 'contestName': 'Dummy data', 'emailAddress': 'emailtester1215@gmail.com'}]
 
@@ -118,19 +120,20 @@ def email_job():
             for record in email_to_these_records:
                 # get details about the contest
                 current_contest_details = get_contest_details(record['contestId'])
-                receiver_email=record['emailAddress']
-                contestTime=current_contest_details['startTime']
-                duration=current_contest_details['duration_seconds']
-                contestName=record['contestName']
-                # print(receiver_email,contestTime,duration,contestName)   # Comment
-                send_Email(receiver_email,contestTime,duration,contestName)
-        time.sleep(1)
+                receiver_email = record['emailAddress']
+                contestTime = current_contest_details['startTime']
+                duration = current_contest_details['duration_seconds']
+                contestName = record['contestName']
+                send_Email(receiver_email, contestTime, duration, contestName)
+        time.sleep(3600*10)         # after every 10 minutes
 
 # Call the JOB
 email_job()
 
 # TODO: Upgrade the Note after pushing the required changes
 '''NOTE : The current script takes a lot of time to send emails need to optimise '''
+# Sol1: Use -10 to +10 minutes buffer and send emails  (Have applied this one currently)
+# sol2: Use threading
 
 
 
