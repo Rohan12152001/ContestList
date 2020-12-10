@@ -6,15 +6,6 @@ from mysql.connector import Error
 
 app = Flask(__name__)
 
-'''Code to convert unix to valid time'''
-# import datetime
-# print(
-#     datetime.datetime.fromtimestamp(
-#         int("1284105682")
-#     ).strftime('%H:%M:%S')
-# )
-'''Unix time end'''
-
 ''' Fetch data from DB'''
 def fetch_from_DB():
     try:
