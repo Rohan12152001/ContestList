@@ -111,8 +111,8 @@ def email_job():
     while True:
         time_now = (int(time.time()))
         # time_now = 1607625950
+        # start = time.perf_counter()
         email_to_these_records = query_for_emailJob(time_now - 3600*10, time_now + 3600*10)     # This is a dictionary
-        # print(email_to_these_records)
         # The records format is:
         # [{'contestId': 1501, 'contestName': 'Dummy data', 'emailAddress': 'emailtester1215@gmail.com'}]
 
@@ -125,6 +125,8 @@ def email_job():
                 duration = current_contest_details['duration_seconds']
                 contestName = record['contestName']
                 send_Email(receiver_email, contestTime, duration, contestName)
+        # finish = time.perf_counter()
+        # print(f'Finish in {round(finish-start,2)} seconds')
         time.sleep(3600*10)         # after every 10 minutes
 
 # Call the JOB
