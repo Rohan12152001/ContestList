@@ -130,7 +130,8 @@ def email_job():
 # Call the JOB
 email_job()
 
-# TODO: Upgrade the Note after pushing the required changes
+
+# TODO: (DONE) Upgrade the Note after pushing the required changes
 '''NOTE : The current script takes a lot of time to send emails need to optimise '''
 # Sol1: Use -10 to +10 minutes buffer and send emails  (Have applied this one currently)
 # sol2: Use threading

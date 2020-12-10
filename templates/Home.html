@@ -20,6 +20,7 @@
 </head>
 <body>
     <h2> All contests are displayed here </h2>
+    <h3>The time displayed are of the format {DD-MM-YYYY HH-MM-SS} & IST Time </h3>
 
     <table id="contest_table" style="border:1px solid black;padding: 1px;width: 75%;border-collapse: collapse;table-layout: auto">
         <!--    table to display contests-->
@@ -56,14 +57,16 @@
                     let currentTime=Math.floor(Date.now() /1000);
                     let cutOffTime=data.records[record]['startTime'] - 3600;
 
+                    // Here we also pass contestId and contestTime as a query Parameter
+                    // when the subscribe button is Hit
                     if(data.records[record]['phase'] !== "Ended"){
                         if(data.records[record]['phase'] !== "Coding" && currentTime < cutOffTime){
                             contest_table.innerHTML+="<tr>" +
                                               "<td>"+ data.records[record]['id'] +"</td>" +
                                               "<td>"+ data.records[record]['contest_name'] +"</td>" +
-                                              "<td>"+ data.records[record]['duration_seconds'] +"</td>" +
-                                              "<td>"+ data.records[record]['startTime'] +"</td>" +
-                                              "<td>"+ data.records[record]['endTime'] +"</td>" +
+                                              "<td>"+ data.records[record]['durationFormatted'] +" Hrs </td>" +
+                                              "<td>"+ data.records[record]['startTimeFormatted'] +"</td>" +
+                                              "<td>"+ data.records[record]['endTimeFormatted'] +"</td>" +
                                               "<td>"+ data.records[record]['phase'] +"</td>" +
                                               "<td><form action=\"/emailPage\" style='padding: 4px'>" +
                                                 "<input type='hidden' name='contestId' value=\'"+ conID +"\'>" +

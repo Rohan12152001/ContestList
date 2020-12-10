@@ -100,6 +100,11 @@ def Hrs_to_seconds(Hrs):
     else:
         return 0
 
+def formatDateTime(givenTime):
+    return datetime.datetime.fromtimestamp(
+        int(givenTime)
+    ).strftime('%d-%m-%Y || %H:%M:%S')
+
 # Home page that returns an html page !!
 @app.route('/')
 def home_page():
@@ -137,10 +142,15 @@ def postEmail():
     return jsonify(response)
 
 # api to fetch data from our DB
+# TODO: (DONE) Add contestTime, duration and endTime as formatted IST times and pass them in the JSON
 @app.route('/contests')
 def get_contests_from_DB():
     records = fetch_from_DB()
     # print(records)
+
+    # record format
+    # {'id': 1457, 'contest_name': 'Codeforces Round #687 (Div. 2, based on Technocup 2021 Elimin
+    # ation Round 2)', 'duration_seconds': 7200, 'startTime': 1606633500, 'endTime': 1606640700}
     for index, row in enumerate(records):
         curr_time = int(time.time())
         if (curr_time < row['startTime']):
@@ -152,6 +162,12 @@ def get_contests_from_DB():
         else:
             # phase ended
             row['phase'] = 'Ended'
+        startTimeFormatted = formatDateTime(row['startTime'])
+        endTimeFormatted = formatDateTime(row['endTime'])
+        durationFormatted = row['duration_seconds'] // 3600  # This is in hrs
+        row['startTimeFormatted'] = startTimeFormatted
+        row['endTimeFormatted'] = endTimeFormatted
+        row['durationFormatted'] = durationFormatted
     return {'records': records}
 
 
