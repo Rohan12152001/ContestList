@@ -7,7 +7,7 @@ from mysql.connector import Error
 from mysql.connector import errorcode
 
 '''Function to insert data as fetched by  Update_DB()'''
-def insertIntoTable(id,name,duration,startTime,endTime):
+def insertIntoTable(id, name, duration, startTime, endTime):
     # endTime= startTime + duration
     try:
         connection = mysql.connector.connect(host='localhost',
