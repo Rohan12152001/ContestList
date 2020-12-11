@@ -1,4 +1,5 @@
 import smtplib, ssl
+import threading
 import mysql.connector
 from mysql.connector import Error
 import time
@@ -13,7 +14,7 @@ def get_contest_details(contestId):
                                              password='Rohan@1215')
         cursor = connection.cursor(dictionary=True)
         sql_fetch_query = """select * from temp_table where id=%s"""
-        cursor.execute(sql_fetch_query,(contestId,))
+        cursor.execute(sql_fetch_query, (contestId,))
         records = cursor.fetchone()
     except Error as e:
         print("Error reading data from MySQL table", e)
@@ -29,36 +30,40 @@ def get_contest_details(contestId):
 '''Get details end'''
 
 '''Time formatting'''
+
 def formatTime(contestTime):
     return datetime.datetime.fromtimestamp(
         int(contestTime)
     ).strftime('%H:%M:%S')
+
 ''' END '''
 
 '''Format Date'''
+
 def formatDate(contestTime):
     return datetime.datetime.fromtimestamp(
         int(contestTime)
     ).strftime('%Y-%m-%d')
+
 '''END'''
 
 # The essentials for connecting to G-mail
 smtp_server = "smtp.gmail.com"
-port = 587                                                                         # For starttls the port number is 587
+port = 587  # For starttls the port number is 587
 sender_email = "emailtester1215@gmail.com"
 
 # TODO: Change the way of accepting passwords by using envVariables
-password = input("Enter email password: ")                                         # Not a good practice
+password = input("Enter email password: ")  # Not a good practice
 subject = "Reminder from ContestList"
 
-
 ''' Note: time & duration are given as UNIX time you must convert them into required formats '''
+
 def send_Email(receiver_email, contestTime, duration, contestName):
     contestTimeFormatted = formatTime(contestTime)
     contestDateFormatted = formatDate(contestTime)
-    contestDurationFormatted = duration//3600               # In hours
+    contestDurationFormatted = duration // 3600  # In hours
     # print(contestTimeFormatted,contestDateFormatted,contestDurationFormatted)  ## comment OUT
-    body = f'You have a contest scheduled at {contestTimeFormatted} hrs on {contestDateFormatted} (YYYY-MM-DD) \n ' \
+    body = f'You have a contest scheduled at {contestTimeFormatted} hrs on {contestDateFormatted} (YYYY-MM-DD) \n' \
            f'Contest Name : {contestName} which is expected to run for {contestDurationFormatted} hrs.'
     message = f'Subject:{subject}\n\n{body}'
 
@@ -112,7 +117,7 @@ def email_job():
         time_now = (int(time.time()))
         # time_now = 1607625950
         # start = time.perf_counter()
-        email_to_these_records = query_for_emailJob(time_now - 3600*10, time_now + 3600*10)     # This is a dictionary
+        email_to_these_records = query_for_emailJob(time_now - 3600 * 10, time_now + 3600 * 10)  # This is a dictionary
         # The records format is:
         # [{'contestId': 1501, 'contestName': 'Dummy data', 'emailAddress': 'emailtester1215@gmail.com'}]
 
@@ -124,20 +129,18 @@ def email_job():
                 contestTime = current_contest_details['startTime']
                 duration = current_contest_details['duration_seconds']
                 contestName = record['contestName']
-                send_Email(receiver_email, contestTime, duration, contestName)
+                # send_Email(receiver_email, contestTime, duration, contestName)
+                tH1 = threading.Thread(target=send_Email, args=(receiver_email, contestTime, duration, contestName))
+                tH1.start()
+            tH1.join()
         # finish = time.perf_counter()
         # print(f'Finish in {round(finish-start,2)} seconds')
-        time.sleep(3600*10)         # after every 10 minutes
+        time.sleep(3600 * 10)  # after every 10 minutes
 
 # Call the JOB
 email_job()
 
-
 # TODO: (DONE) Upgrade the Note after pushing the required changes
 '''NOTE : The current script takes a lot of time to send emails need to optimise '''
-# Sol1: Use -10 to +10 minutes buffer and send emails  (Have applied this one currently)
-# sol2: Use threading
-
-
-
-
+# Sol1: Use -10 to +10 minutes buffer and send emails              (Have applied this one currently)
+# And Use threading: This brings down emailing Time by almost 5x   (Have applied this too)
