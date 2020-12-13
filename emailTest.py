@@ -1,4 +1,4 @@
-import smtplib, ssl
+import smtplib, ssl, os
 import threading
 import mysql.connector
 from mysql.connector import Error
@@ -52,8 +52,8 @@ smtp_server = "smtp.gmail.com"
 port = 587  # For starttls the port number is 587
 sender_email = "emailtester1215@gmail.com"
 
-# TODO: Change the way of accepting passwords by using envVariables
-password = input("Enter email password: ")  # Not a good practice
+# TODO: (DONE) Change the way of accepting passwords by using envVariables
+password = str(os.environ.get('emailpass'))
 subject = "Reminder from ContestList"
 
 ''' Note: time & duration are given as UNIX time you must convert them into required formats '''
@@ -115,7 +115,7 @@ def email_job():
     # call this job after every 10 minutes so that email waiting is less
     while True:
         time_now = (int(time.time()))
-        # time_now = 1607625950
+        # time_now = 1607884000
         # start = time.perf_counter()
         email_to_these_records = query_for_emailJob(time_now - 3600 * 10, time_now + 3600 * 10)  # This is a dictionary
         # The records format is:
