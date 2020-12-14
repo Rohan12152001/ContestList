@@ -4,6 +4,7 @@ import mysql.connector
 from mysql.connector import Error
 import time
 import datetime
+import hyperlink
 
 ''' Get details about a specific contest '''
 def get_contest_details(contestId):
@@ -49,8 +50,9 @@ def formatDate(contestTime):
 
 # The essentials for connecting to G-mail
 smtp_server = "smtp.gmail.com"
-port = 587  # For starttls the port number is 587
+port = 587                                                              # For starttls the port number is 587
 sender_email = "emailtester1215@gmail.com"
+contest_Link = hyperlink.parse(u'https://codeforces.com/contests')      # Contest Link using HyperLink
 
 # TODO: (DONE) Change the way of accepting passwords by using envVariables
 password = str(os.environ.get('emailpass'))
@@ -64,7 +66,8 @@ def send_Email(receiver_email, contestTime, duration, contestName):
     contestDurationFormatted = duration // 3600  # In hours
     # print(contestTimeFormatted,contestDateFormatted,contestDurationFormatted)  ## comment OUT
     body = f'You have a contest scheduled at {contestTimeFormatted} hrs on {contestDateFormatted} (YYYY-MM-DD) \n' \
-           f'Contest Name : {contestName} which is expected to run for {contestDurationFormatted} hrs.'
+           f'Contest Name : {contestName} which is expected to run for {contestDurationFormatted} hrs.\n' \
+           f'Contest Link : {contest_Link}'
     message = f'Subject:{subject}\n\n{body}'
 
     # Create a secure SSL context
