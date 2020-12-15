@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EmailPage</title>
+</head>
+<body>
+    <h2> Enter EmailId & select one Reminder Time for all the Contests here !</h2>
+    <div>
+        <form id="email-form">
+            <input type="email" id="emailId" name="emailId" placeholder="Email Id" required> <br> <br>
+<!--            <input type="number" id="contestId" name="contestId" placeholder="Contest Id" required> <br> <br>-->
+            Before:
+            <select name="emailTime" id="emailTime" required>
+                <!-- The innerHtml is entered by using JS -->
+            </select> of the Contest  <br> <br>
+            <input type="submit" id="Submit-form" value="Submit">
+        </form>
+    </div>
+
+    <script>
+
+        var emailId=document.getElementById("emailId");
+        var emailTime=document.getElementById("emailTime");
+        var submit_button=document.getElementById("Submit-form");
+        var contestStartTime = {{ MinContestTime }};
+
+        // Judgement function
+        function JudgeEmailTime(){
+            const cutOff_24hr = contestStartTime - (3600*24);   // All are UNIX time
+            const cutOff_12hr = contestStartTime - (3600*12);   // All are UNIX time
+            const currentTime=Math.floor(Date.now() /1000);     // All are UNIX time
+            emailTime.innerHTML=" ";
+
+            if(currentTime < cutOff_24hr){
+                emailTime.innerHTML+="<option value=\"1hr\">1 Hr</option>" +
+                                     "<option value=\"12hr\">12 Hr</option>" +
+                                     "<option value=\"24hr\">24 Hr</option>";
+            }else if(currentTime < cutOff_12hr){
+                emailTime.innerHTML+="<option value=\"1hr\">1 Hr</option>" +
+                                     "<option value=\"12hr\">12 Hr</option>";
+            }else{
+                emailTime.innerHTML+="<option value=\"1hr\">1 Hr</option>";
+            }
+        }
+        // Judge which emailTimes should be shown
+        JudgeEmailTime();
+
+        // Doing this to pass a json response to the POST api
+
+        submit_button.addEventListener("click",function () {
+            /// The Real Thing ------
+            var temp_emailId=emailId.value;
+            var temp_emailTime=emailTime.value;      // get the conID from the Get request on the DB
+
+            // call the fetch DB from this function
+            fetch("http://127.0.0.1:5000/contests").then(response => response.json()).then(data => {
+                // Iterate through the records and form the Json with every contestID and Call PostEmail
+                var request = new Object();
+                request.emailId = temp_emailId;
+                request.emailTimeBefore = temp_emailTime;
+                for(let record=0;record<data.records.length;record++){
+                    if(data.records[record]['phase'] === 'Before') {
+                        request.contestId = data.records[record]['id'];
+                        fetch('http://127.0.0.1:5000/postEmail',
+                            {
+                                method: "POST",
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(request)
+                            }
+                        ).then(response => response.json());
+                    }
+                }
+            })
+
+        })
+
+    </script>
+
+</body>
+</html>

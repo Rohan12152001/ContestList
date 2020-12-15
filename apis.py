@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request, render_template
-import mysql.connector
+import mysql.connector,sys
 import requests
 import datetime, time
 from mysql.connector import Error
@@ -161,6 +161,22 @@ def get_contests_from_DB():
         row['durationFormatted'] = durationFormatted
     return {'records': records}
 
+# This is a function !
+def get_Min_ContestTime():
+    Temp_records = get_contests_from_DB()
+    min_ContestTime = sys.maxsize
+    for record in Temp_records['records']:
+        if(record['startTime'] < min_ContestTime and record['phase']=='Before'):
+            min_ContestTime = record['startTime']
+    return min_ContestTime
+
+# returns emailPage
+@app.route('/emailPageSubAll')
+def ask_email_page_SubAll():
+    # conID=request.args.get('contestId')
+    # print("conetestID is:", conID) #  comment hai
+    MinContestTime = get_Min_ContestTime()
+    return render_template('emailPageSubAll.html', MinContestTime=MinContestTime)
 
 # print(int(time.time()))
 app.run(port=5000)
