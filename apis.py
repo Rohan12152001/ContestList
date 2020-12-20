@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request, render_template
-import mysql.connector,sys
+import mysql.connector,sys,os
 import requests
 import datetime, time
 from mysql.connector import Error
@@ -179,4 +179,6 @@ def ask_email_page_SubAll():
     return render_template('emailPageSubAll.html', MinContestTime=MinContestTime)
 
 # print(int(time.time()))
-app.run(port=5000)
+# app.run(port=5000)
+port = int(os.environ.get("PORT", 5000))
+app.run(host='0.0.0.0', port=port)
