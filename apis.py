@@ -180,5 +180,7 @@ def ask_email_page_SubAll():
 
 # print(int(time.time()))
 # app.run(port=5000)
+
+# Working on Heroku without DB interactions
 port = int(os.environ.get("PORT", 5001))
 app.run(host='0.0.0.0', port=port)
