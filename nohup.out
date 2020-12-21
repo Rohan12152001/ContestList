@@ -1,0 +1,34 @@
+Enter email password: Traceback (most recent call last):
+  File "emailTest.py", line 56, in <module>
+    password = input("Enter email password: ")  # Not a good practice
+OSError: [Errno 9] Bad file descriptor
+Enter email password: Traceback (most recent call last):
+  File "emailTest.py", line 56, in <module>
+    password = input("Enter email password: ")  # Not a good practice
+OSError: [Errno 9] Bad file descriptor
+Enter email password: Traceback (most recent call last):
+  File "emailTest.py", line 56, in <module>
+    password = input("Enter email password: ")  # Not a good practice
+OSError: [Errno 9] Bad file descriptor
+MySQL connection is closed
+MySQL connection is closed
+MySQL connection is closed
+Email Sent !
+Email Sent !
+Failed to insert into MySQL table 1062 (23000): Duplicate entry '1411' for key 'temp_table.PRIMARY'
+MySQL connection is closed
+Failed to insert into MySQL table 1062 (23000): Duplicate entry '1458' for key 'temp_table.PRIMARY'
+MySQL connection is closed
+Failed to insert into MySQL table 1062 (23000): Duplicate entry '1459' for key 'temp_table.PRIMARY'
+MySQL connection is closed
+Failed to insert into MySQL table 1062 (23000): Duplicate entry '1410' for key 'temp_table.PRIMARY'
+MySQL connection is closed
+Failed to insert into MySQL table 1062 (23000): Duplicate entry '1463' for key 'temp_table.PRIMARY'
+MySQL connection is closed
+Failed to insert into MySQL table 1062 (23000): Duplicate entry '1462' for key 'temp_table.PRIMARY'
+MySQL connection is closed
+MySQL connection is closed
+MySQL connection is closed
+MySQL connection is closed
+Email Sent !
+Email Sent !
