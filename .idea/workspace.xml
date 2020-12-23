@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="141a4c60-ed61-4266-8745-eb093379859e" name="Default Changelist" comment="Added" />
+    <list default="true" id="141a4c60-ed61-4266-8745-eb093379859e" name="Default Changelist" comment="Added">
+      <change beforePath="$PROJECT_DIR$/templates/emailPage.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/emailPage.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/emailPageSubAll.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/emailPageSubAll.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -103,7 +106,7 @@
       <workItem from="1608469371970" duration="6557000" />
       <workItem from="1608565332852" duration="7273000" />
       <workItem from="1608664957229" duration="890000" />
-      <workItem from="1608747099598" duration="4515000" />
+      <workItem from="1608747099598" duration="4980000" />
     </task>
     <servers />
   </component>

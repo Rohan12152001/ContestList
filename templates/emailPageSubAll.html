@@ -54,7 +54,7 @@
             var temp_emailTime=emailTime.value;      // get the conID from the Get request on the DB
 
             // call the fetch DB from this function
-            fetch("http://127.0.0.1:5000/contests").then(response => response.json()).then(data => {
+            fetch("https://contestnotify.herokuapp.com/contests").then(response => response.json()).then(data => {
                 // Iterate through the records and form the Json with every contestID and Call PostEmail
                 var request = new Object();
                 request.emailId = temp_emailId;
@@ -62,7 +62,7 @@
                 for(let record=0;record<data.records.length;record++){
                     if(data.records[record]['phase'] === 'Before') {
                         request.contestId = data.records[record]['id'];
-                        fetch('http://127.0.0.1:5000/postEmail',
+                        fetch('https://contestnotify.herokuapp.com/postEmail',
                             {
                                 method: "POST",
                                 headers: {
