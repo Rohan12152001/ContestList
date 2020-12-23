@@ -43,7 +43,7 @@
         function display_table() {
             contest_table.innerHTML=" "     // Emptying the html before inserting
 
-            fetch("http://127.0.0.1:5000/contests").then(response => response.json()).then(data => {
+            fetch("https://contestnotify.herokuapp.com/contests").then(response => response.json()).then(data => {
                 contest_table.setAttribute('border','2');
 
                 // Modifying the table using DOM
