@@ -9,10 +9,10 @@ import hyperlink
 ''' Get details about a specific contest '''
 def get_contest_details(contestId):
     try:
-        connection = mysql.connector.connect(host='localhost',
-                                             database='proj_contestlist',
-                                             user='root',
-                                             password='Rohan@1215')
+        connection = mysql.connector.connect(host='us-cdbr-east-02.cleardb.com',
+                                             database='heroku_29de133c90a3dee',
+                                             user='b74ea14c5ae125',
+                                             password='afef6882')
         cursor = connection.cursor(dictionary=True)
         sql_fetch_query = """select * from temp_table where id=%s"""
         cursor.execute(sql_fetch_query, (contestId,))
@@ -91,10 +91,10 @@ def send_Email(receiver_email, contestTime, duration, contestName):
 # This query returns all the email_Info that has to be sent at that moment
 def query_for_emailJob(lowTime, highTime):
     try:
-        connection = mysql.connector.connect(host='localhost',
-                                             database='proj_contestlist',
-                                             user='root',
-                                             password='Rohan@1215')
+        connection = mysql.connector.connect(host='us-cdbr-east-02.cleardb.com',
+                                             database='heroku_29de133c90a3dee',
+                                             user='b74ea14c5ae125',
+                                             password='afef6882')
         cursor = connection.cursor(dictionary=True)
         sql_fetch_query = "select contestId,contestName,emailAddress from email_table where sendTime between %s and %s"
         cursor.execute(sql_fetch_query, (lowTime, highTime))

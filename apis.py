@@ -9,10 +9,10 @@ app = Flask(__name__)
 ''' Fetch data from DB'''
 def fetch_from_DB():
     try:
-        connection = mysql.connector.connect(host='localhost',
-                                             database='proj_contestlist',
-                                             user='root',
-                                             password='Rohan@1215')
+        connection = mysql.connector.connect(host='us-cdbr-east-02.cleardb.com',
+                                             database='heroku_29de133c90a3dee',
+                                             user='b74ea14c5ae125',
+                                             password='afef6882')
         cursor = connection.cursor(dictionary=True)
         sql_fetch_query = "select * from temp_table order by startTime ASC"
         cursor.execute(sql_fetch_query)
@@ -36,10 +36,10 @@ def fetch_from_DB():
 ''' Get details about a specific contest '''
 def get_contest_details(contestId):
     try:
-        connection = mysql.connector.connect(host='localhost',
-                                             database='proj_contestlist',
-                                             user='root',
-                                             password='Rohan@1215')
+        connection = mysql.connector.connect(host='us-cdbr-east-02.cleardb.com',
+                                             database='heroku_29de133c90a3dee',
+                                             user='b74ea14c5ae125',
+                                             password='afef6882')
         cursor = connection.cursor(dictionary=True)
         sql_fetch_query = """select * from temp_table where id=%s"""
         cursor.execute(sql_fetch_query,(contestId,))
@@ -61,10 +61,10 @@ def get_contest_details(contestId):
 def insert_email(details):
     # "details" tuple is what we want insert
     try:
-        connection = mysql.connector.connect(host='localhost',
-                                             database='proj_contestlist',
-                                             user='root',
-                                             password='Rohan@1215')
+        connection = mysql.connector.connect(host='us-cdbr-east-02.cleardb.com',
+                                             database='heroku_29de133c90a3dee',
+                                             user='b74ea14c5ae125',
+                                             password='afef6882')
         cursor = connection.cursor()
         sql_insert_query = """INSERT INTO email_table (contestId,contestName,emailAddress,sendTime) values (%s,%s,%s,%s)"""
         cursor.execute(sql_insert_query, details)
