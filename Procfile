@@ -1,6 +1,6 @@
 # web: gunicorn --bind 0.0.0.0:$PORT apis:app
 web: gunicorn apis:application --preload -b 0.0.0.0:5001
-worker: python script.py
-worker: python emailTest.py
+worker1: python script.py
+worker2: python emailTest.py
 # web: gunicorn apis:app
 
