@@ -48,7 +48,7 @@ def Update_DB():
             endTime=startTime+duration
             insertIntoTable(id,name,duration,startTime,endTime)
             iterate+=1
-        time.sleep(3600)
+        time.sleep(3600)        # Updating every hour
 
     #return
 
