@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request, render_template
-import mysql.connector,sys,os
+import mysql.connector,sys,os,webbrowser
 import requests
 import datetime, time
 from mysql.connector import Error
@@ -130,6 +130,8 @@ def postEmail():
     insert_tuple = (int(response['contestId']), contest_details['contest_name'], response['emailId'], sendTime)
     insert_email(insert_tuple)
 
+    # return jsonify(response)
+    webbrowser.open('https://contestnotify.herokuapp.com')          # go to Home page
     return jsonify(response)
 
 # api to fetch data from our DB
