@@ -132,7 +132,7 @@ def postEmail():
 
     # return jsonify(response)
     webbrowser.open('https://contestnotify.herokuapp.com')          # go to Home page
-    return jsonify(response)
+    # return jsonify(response)
 
 # api to fetch data from our DB
 # TODO: (DONE) Add contestTime, duration and endTime as formatted IST times and pass them in the JSON
