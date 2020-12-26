@@ -93,7 +93,7 @@ def Hrs_to_seconds(Hrs):
 
 def formatDateTime(givenTime):
     return datetime.datetime.fromtimestamp(
-        int(givenTime)
+        int(givenTime+19800)                    # Adding 19800 for IST time
     ).strftime('%d-%m-%Y || %H:%M:%S')
 
 # Home page that returns an html page !!
