@@ -129,8 +129,8 @@ def postEmail():
     # Now insert the data required for email table !
     insert_tuple = (int(response['contestId']), contest_details['contest_name'], response['emailId'], sendTime)
     insert_email(insert_tuple)
-    return redirect(url_for('home_page'))
-    # return jsonify(response)
+    # return redirect(url_for('home_page'))
+    return jsonify(response)
 
 # api to fetch data from our DB
 # TODO: (DONE) Add contestTime, duration and endTime as formatted IST times and pass them in the JSON
