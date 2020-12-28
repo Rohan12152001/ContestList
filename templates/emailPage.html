@@ -71,7 +71,7 @@
 
             // Just like we do it in postman !
             // the fetch() function returns a promise
-
+            // Also after submitting the form page redirects to Home page :)
             fetch('https://contestnotify.herokuapp.com/postEmail',
                 {method:"POST",
                     headers: {
@@ -80,9 +80,6 @@
                     body:JSON.stringify(request)
                 }
             ).then(response => window.location.replace("https://contestnotify.herokuapp.com"));
-
-            // maybe here we should do a get request for displaying Success or Fail ??
-            // window.location.replace("https://contestnotify.herokuapp.com");
 
         })
 
