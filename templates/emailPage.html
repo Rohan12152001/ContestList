@@ -79,10 +79,11 @@
                     },
                     body:JSON.stringify(request)
                 }
-            ).then(response => response.json());
+            ).then(response => response.json())
+             .then(window.location.replace("https://contestnotify.herokuapp.com"));
 
             // maybe here we should do a get request for displaying Success or Fail ??
-            window.location.replace("https://contestnotify.herokuapp.com");
+            // window.location.replace("https://contestnotify.herokuapp.com");
 
         })
 
