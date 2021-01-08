@@ -115,7 +115,7 @@ def query_for_emailJob(lowTime, highTime):
 
 # This job is expected to run in the background
 def email_job():
-    # call this job after every 10 minutes so that email waiting is less
+    # call this job after every 10 minutes so that email waiting is less (Now this is Done by the Heroku scheduler)
     while True:
         time_now = (int(time.time()))
         # time_now = 1607884000
@@ -138,7 +138,8 @@ def email_job():
             tH1.join()
         # finish = time.perf_counter()
         # print(f'Finish in {round(finish-start,2)} seconds')
-        time.sleep(60 * 10)  # after every 10 minutes
+        # time.sleep(60 * 10)  # after every 10 minutes
+        break
 
 # Call the JOB
 email_job()

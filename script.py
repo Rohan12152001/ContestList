@@ -47,11 +47,11 @@ def Update_DB():
             startTime=response['result'][iterate]['startTimeSeconds']
             endTime=startTime+duration
             insertIntoTable(id,name,duration,startTime,endTime)
-            iterate+=1
-        time.sleep(3600)        # Updating every hour
+            iterate += 1
+        # time.sleep(3600)        # Updating every hour
+        break
 
-    #return
-
+# Call UpdateDB()
 Update_DB()
 
 
