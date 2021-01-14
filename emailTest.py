@@ -54,7 +54,7 @@ port = 587                                                              # For st
 sender_email = "emailtester1215@gmail.com"
 contest_Link = hyperlink.parse(u'https://codeforces.com/contests')      # Contest Link using HyperLink
 
-# TODO: (DONE) Change the way of accepting passwords by using envVariables
+# TODO: (DONE) Change the way of accepting passwords by using envVariables // also done for Heroku using configVars
 password = str(os.environ.get('emailpass'))
 subject = "Reminder from ContestList"
 
