@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request, render_template, redirect, url_for
-import mysql.connector,sys,os,webbrowser
+import mysql.connector, sys, os, webbrowser
 import requests
 import datetime, time
 from mysql.connector import Error

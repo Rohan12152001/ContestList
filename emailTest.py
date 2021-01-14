@@ -108,7 +108,7 @@ def query_for_emailJob(lowTime, highTime):
         if (connection.is_connected()):
             cursor.close()
             connection.close()
-            print("MySQL connection is closed")
+            print("MySQL connection is closed (emailTest.py)")
 
     return records
 
@@ -117,8 +117,9 @@ def query_for_emailJob(lowTime, highTime):
 def email_job():
     # call this job after every 10 minutes so that email waiting is less (Now this is Done by the Heroku scheduler)
     while True:
-        time_now = (int(time.time()))
-        # time_now = 1607884000
+        # time_now = (int(time.time()))
+        # print(time_now)
+        time_now = 1610548600
         # start = time.perf_counter()
         email_to_these_records = query_for_emailJob(time_now - 60 * 10, time_now + 60 * 10)  # This is a dictionary
         # The records format is:

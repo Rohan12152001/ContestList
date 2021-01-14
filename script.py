@@ -28,7 +28,7 @@ def insertIntoTable(id, name, duration, startTime, endTime):
         if (connection.is_connected()):
             cursor.close()
             connection.close()
-            print("MySQL connection is closed")
+            print("MySQL connection is closed (script.py)")
 
 # Main func() gets data from api and calls another to insert data !!
 def Update_DB():
