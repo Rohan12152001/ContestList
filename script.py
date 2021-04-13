@@ -1,6 +1,6 @@
 from flask import Flask,jsonify,request,render_template
 import mysql.connector
-import requests
+import requests, os
 import time
 import datetime
 from mysql.connector import Error
@@ -13,7 +13,7 @@ def insertIntoTable(id, name, duration, startTime, endTime):
         connection = mysql.connector.connect(host='us-cdbr-east-02.cleardb.com',
                                              database='heroku_29de133c90a3dee',
                                              user='b74ea14c5ae125',
-                                             password='afef6882')
+                                             password=str(os.environ.get('Contestpass')))
         cursor = connection.cursor()
         mySql_insert_query = """INSERT INTO temp_table (id,contest_name,duration_seconds,startTime,endTime) 
                                         VALUES (%s, %s, %s, %s, %s) """

@@ -12,7 +12,7 @@ def get_contest_details(contestId):
         connection = mysql.connector.connect(host='us-cdbr-east-02.cleardb.com',
                                              database='heroku_29de133c90a3dee',
                                              user='b74ea14c5ae125',
-                                             password='afef6882')
+                                             password=str(os.environ.get('Contestpass')))
         cursor = connection.cursor(dictionary=True)
         sql_fetch_query = """select * from temp_table where id=%s"""
         cursor.execute(sql_fetch_query, (contestId,))
@@ -94,7 +94,7 @@ def query_for_emailJob(lowTime, highTime):
         connection = mysql.connector.connect(host='us-cdbr-east-02.cleardb.com',
                                              database='heroku_29de133c90a3dee',
                                              user='b74ea14c5ae125',
-                                             password='afef6882')
+                                             password=str(os.environ.get('Contestpass')))
         cursor = connection.cursor(dictionary=True)
         sql_fetch_query = "select contestId,contestName,emailAddress from email_table where sendTime between %s and %s"
         cursor.execute(sql_fetch_query, (lowTime, highTime))

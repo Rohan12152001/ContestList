@@ -12,7 +12,7 @@ def fetch_from_DB():
         connection = mysql.connector.connect(host='us-cdbr-east-02.cleardb.com',
                                              database='heroku_29de133c90a3dee',
                                              user='b74ea14c5ae125',
-                                             password='afef6882')
+                                             password=str(os.environ.get('Contestpass')))
         cursor = connection.cursor(dictionary=True)
         sql_fetch_query = "select * from temp_table order by startTime ASC"
         cursor.execute(sql_fetch_query)
@@ -39,7 +39,7 @@ def get_contest_details(contestId):
         connection = mysql.connector.connect(host='us-cdbr-east-02.cleardb.com',
                                              database='heroku_29de133c90a3dee',
                                              user='b74ea14c5ae125',
-                                             password='afef6882')
+                                             password=str(os.environ.get('Contestpass')))
         cursor = connection.cursor(dictionary=True)
         sql_fetch_query = """select * from temp_table where id=%s"""
         cursor.execute(sql_fetch_query,(contestId,))
@@ -64,7 +64,7 @@ def insert_email(details):
         connection = mysql.connector.connect(host='us-cdbr-east-02.cleardb.com',
                                              database='heroku_29de133c90a3dee',
                                              user='b74ea14c5ae125',
-                                             password='afef6882')
+                                             password=str(os.environ.get('Contestpass')))
         cursor = connection.cursor()
         sql_insert_query = """INSERT INTO email_table (contestId,contestName,emailAddress,sendTime) values (%s,%s,%s,%s)"""
         cursor.execute(sql_insert_query, details)
